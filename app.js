@@ -1,25 +1,32 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-
 const app = express();
 const port = 8333;
-
 const bodyParser = require("body-parser");
+
 
 
 const index = require('./routes/index');
 const hello = require('./routes/hello');
+const reports = require('./routes/reports');
 
 app.use('/', index);
 app.use('/hello', hello);
+app.use('/reports', reports);
+
+
+
+
+
+
+
+
+
 
 //Kanske ta bort?
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./db/texts.sqlite');
-
-
-
 
 
 app.use(cors());
@@ -40,7 +47,7 @@ if (process.env.NODE_ENV !== 'test') {
 app.use((req, res, next) => {
     console.log(req.method);
     console.log(req.path);
-    console.log("*hej*");
+    console.log("*hej!!*");
     next();
 });
 
@@ -154,7 +161,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 // Add routes for 404 and error handling
 app.use((req, res, next) => {
-    var err = new Error("Not Found");
+    var err = new Error("Not Foundz!");
     err.status = 404;
     next(err);
 });
